@@ -4,6 +4,8 @@
 
 This is a reimplementation of the `sponge` utility from the [`moreutils`](https://joeyh.name/code/moreutils/) package. It "soaks up standard input and writes to a file".
 
+The single improvement over `sponge` is that `ssponge` will not rewrite the file if its contents have not changed. This is a big advantage when you want to run the same command for multiple files (for example, with `xargs`) and not touch those files that have not changed because a file watcher in your project would still be triggered even if the contents are the same.
+
 As to why and when it's necessary, see [this StackExchange answer](https://unix.stackexchange.com/questions/207919/sponge-from-moreutils-whats-the-difference-to-shell-redirect-useful-examples/207921#207921).
 
 ## Usage example

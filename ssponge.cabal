@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           ssponge
-version:        0.1.0.0
+version:        0.2.0.0
 description:    Please see the README on GitHub at <https://github.com/eunikolsky/ssponge#readme>
 homepage:       https://github.com/eunikolsky/ssponge#readme
 bug-reports:    https://github.com/eunikolsky/ssponge/issues
@@ -44,6 +44,7 @@ executable ssponge
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , directory
     , ssponge
   default-language: Haskell2010
 
