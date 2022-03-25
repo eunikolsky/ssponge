@@ -1,3 +1,5 @@
 # Changelog for ssponge
 
-## Unreleased changes
+## 0.1.0
+
+* Reimplement the `sponge` utility.
