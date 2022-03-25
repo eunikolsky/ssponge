@@ -1,0 +1,47 @@
+# based on https://kodimensional.dev/github-actions
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  stack:
+    name: stack
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-10.15]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: haskell/actions/setup@v1
+        with:
+          enable-stack: true
+
+      - uses: actions/cache@v2
+        name: Cache ~/.stack
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-stack
+
+      - name: Build
+        run: stack build --system-ghc --test --bench --no-run-tests --no-run-benchmarks
+
+  hlint:
+    name: hlint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run HLint
+        env:
+          HLINT_VERSION: "3.3.6"
+        run: |
+          curl -sSLo hlint.tgz https://github.com/ndmitchell/hlint/releases/download/v${HLINT_VERSION}/hlint-${HLINT_VERSION}-x86_64-linux.tar.gz
+          tar xf hlint.tgz
+          ./hlint-${HLINT_VERSION}/hlint app/

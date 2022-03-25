@@ -1,5 +1,7 @@
 # `ssponge`
 
+[![Github CI](https://github.com/eunikolsky/ssponge/workflows/CI/badge.svg)](https://github.com/eunikolsky/ssponge/actions)
+
 ## Purpose
 
 This is a reimplementation of the `sponge` utility from the [`moreutils`](https://joeyh.name/code/moreutils/) package. It "soaks up standard input and writes to a file".
