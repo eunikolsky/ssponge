@@ -1,6 +1,6 @@
 module Main where
 
-import Control.Monad (unless)
+import Control.Monad (when)
 import qualified Data.ByteString as B
 import System.Directory (doesFileExist)
 import System.Environment (getArgs)
@@ -16,12 +16,12 @@ main = do
 -- | Writes the file contents only if they have changed.
 writeContentsIfChanged :: FilePath -> Maybe B.ByteString -> B.ByteString -> IO ()
 writeContentsIfChanged filename maybeExistingContents contents =
-  case maybeExistingContents of
-    Just existingContents -> do
-      unless (contents == existingContents) $
-        B.writeFile filename contents
+  when shouldWriteFile $ B.writeFile filename contents
 
-    Nothing -> B.writeFile filename contents
+  where
+    shouldWriteFile = case maybeExistingContents of
+      Just existingContents -> contents /= existingContents
+      Nothing -> False
 
 -- | Reads the file contents if it exists.
 readFileIfExists :: FilePath -> IO (Maybe B.ByteString)
