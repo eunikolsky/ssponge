@@ -2,9 +2,11 @@ module Main where
 
 import Control.Monad (when)
 import qualified Data.ByteString as B
+import Data.Version (showVersion)
+import Paths_ssponge (version)
 import System.Directory (doesFileExist)
 import System.Environment (getArgs)
-import System.Exit (die)
+import System.Exit (die, exitSuccess)
 
 main :: IO ()
 main = do
@@ -21,7 +23,7 @@ writeContentsIfChanged filename maybeExistingContents contents =
   where
     shouldWriteFile = case maybeExistingContents of
       Just existingContents -> contents /= existingContents
-      Nothing -> False
+      Nothing -> True
 
 -- | Reads the file contents if it exists.
 readFileIfExists :: FilePath -> IO (Maybe B.ByteString)
@@ -32,10 +34,12 @@ readFileIfExists filename = do
     else pure Nothing
 
 -- | Retrieves the filename as the single argument to the program.
--- Terminates program if it's not provided.
+-- Terminates program if it's not provided. Also supports printing
+-- the program version when requested.
 getFilename :: IO FilePath
 getFilename = do
   args <- getArgs
   case args of
+    ["--version"] -> putStrLn (showVersion version) >> exitSuccess
     [filename] -> return filename
-    _ -> die "Usage: ssponge <filename>"
+    _ -> die "Usage: ssponge <filename>|--version"
