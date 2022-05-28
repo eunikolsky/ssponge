@@ -21,7 +21,7 @@ writeContentsIfChanged filename maybeExistingContents contents =
   where
     shouldWriteFile = case maybeExistingContents of
       Just existingContents -> contents /= existingContents
-      Nothing -> False
+      Nothing -> True
 
 -- | Reads the file contents if it exists.
 readFileIfExists :: FilePath -> IO (Maybe B.ByteString)
